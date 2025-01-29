@@ -1,0 +1,19 @@
+vault secrets enable -path=kvv2 kv-v2
+
+vault write auth/kubernetes/config \
+kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
+
+
+vault policy write demo-app-policy - <<EOF
+path "kvv2/data/demo-app/*" {
+capabilities = ["read"]
+}
+EOF
+
+vault write auth/kubernetes/role/demo-app-role \
+bound_service_account_names="demo-app-service-account" \
+bound_service_account_namespaces="app" \
+policies="demo-app-policy" \
+ttl=36000
+
+vault kv put kvv2/demo-app/creds rabbitmq.host=127.0.0.1 rabbitmq.port=5672 rabbitmq.username=user rabbitmq.password=uSBzagsEieKyR7DI rabbitmq.virtual-host=/
