@@ -1,24 +1,58 @@
 spring:
   application:
-    name: spring-cloud-vault-demo
+    name: demo-app
 
   config:
     import: vault://
 
+#--------------------------------------------- Config for local development
+#  cloud:
+#    vault:
+#      host: localhost
+#      port: 8200
+#      scheme: http
+#      authentication: token
+#      kv:
+#        enabled: true
+#        backend: kvv2
+#        default-context: demo-app/creds
+#
+#      config:
+#        lifecycle:
+#          enabled: true
+#      token: hvs.CAESIIJDwI7uHcH1B1cjsD_pFmuNH93s1qwB_5OUNwFCjhRaGh4KHGh2cy5GdW5FUHQyWlpKVzZiUWJZM0w4S3VtaUc
+#
+#  rabbitmq:
+#    host: ${rabbitmq.host}
+#    username: ${rabbitmq.username}
+#    password: ${rabbitmq.password}
+#    virtual-host: ${rabbitmq.virtual-host}
+#    port: 5672
+
+  # ----------------------------------------- Config for minikube
   cloud:
     vault:
-      host: vault.default.svc.cluster.local
+      host: vault.vault.svc.cluster.local
       port: 8200
       scheme: http
       authentication: kubernetes
       kubernetes:
         role: demo-app-role
+        kubernetes-path: kubernetes
+        service-account-token-file: /var/run/secrets/kubernetes.io/serviceaccount/token
       kv:
         enabled: true
         backend: kvv2
-        application-name: demo-app/creds
-#        default-context: credentials
+        default-context: demo-app/creds
+      config:
+        lifecycle:
+          enabled: true
 
+  rabbitmq:
+    host: my-release-rabbitmq.default.svc.cluster.local
+    username: ${rabbitmq.username} # Use Vault properties
+    password: ${rabbitmq.password}
+    virtual-host: ${rabbitmq.virtual-host}
 
 #  spring.cloud.vault.kubernetes.service-account-token-file=/var/run/secrets/kubernetes.io/serviceaccount/token
 #  spring.cloud.vault.kubernetes.service-account-ca-cert-file=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt

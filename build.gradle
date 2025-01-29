@@ -19,6 +19,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "2024.0.0")
+    set('lombokVersion', "1.18.30")
 }
 
 dependencies {
@@ -26,7 +27,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+    implementation 'org.springframework.cloud:spring-cloud-vault-config-rabbitmq'
     runtimeOnly 'org.postgresql:postgresql'
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
 dependencyManagement {

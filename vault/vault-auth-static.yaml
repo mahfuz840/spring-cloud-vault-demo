@@ -5,11 +5,7 @@ metadata:
   namespace: vault
   name: demo-operator
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  namespace: app
-  name: demo-app-service-account
+
 ---
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultAuth

@@ -15,13 +15,13 @@ spec:
       labels:
         app: demo-app
     spec:
-      serviceAccountName: demo-app-service-account # Your application's service account
+      serviceAccountName: demo-app-service-account
       containers:
         - name: demo-app-container
-          image: localhost:5000/demo-app:v1 # Replace with your Docker image name
+          image: docker.io/library/demo-app:v2.7
           ports:
-            - containerPort: 8080  # Replace with your application's port
-          imagePullPolicy: Always
+            - containerPort: 8080
+          imagePullPolicy: Never
           resources:
             requests:
               memory: "512Mi"
