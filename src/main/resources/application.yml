@@ -4,6 +4,8 @@ spring:
 
   config:
     import: vault://
+#      - vault://kvv2/data/demo-app/creds/rabbitmq
+#      - vault://kvv2/data/demo-app/creds/consul
 
 #--------------------------------------------- Config for local development
 #  cloud:
@@ -43,16 +45,24 @@ spring:
       kv:
         enabled: true
         backend: kvv2
-        default-context: demo-app/creds
+        default-context: demo-app
+        profiles: /creds/rabbitmq, /creds/consul
       config:
         lifecycle:
           enabled: true
+    consul:
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+      host: ${consul.host}
+      port: ${consul.port}
 
-  rabbitmq:
-    host: my-release-rabbitmq.default.svc.cluster.local
-    username: ${rabbitmq.username} # Use Vault properties
-    password: ${rabbitmq.password}
-    virtual-host: ${rabbitmq.virtual-host}
+#  rabbitmq:
+#    host: my-release-rabbitmq.default.svc.cluster.local
+#    username: ${rabbitmq.username} # Use Vault properties
+#    password: ${rabbitmq.password}
+#    virtual-host: ${rabbitmq.virtual-host}
 
 #  spring.cloud.vault.kubernetes.service-account-token-file=/var/run/secrets/kubernetes.io/serviceaccount/token
 #  spring.cloud.vault.kubernetes.service-account-ca-cert-file=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt

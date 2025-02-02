@@ -18,7 +18,7 @@ spec:
       serviceAccountName: demo-app-service-account
       containers:
         - name: demo-app-container
-          image: docker.io/library/demo-app:v2.7
+          image: docker.io/library/demo-app:v2.9
           ports:
             - containerPort: 8080
           imagePullPolicy: Never

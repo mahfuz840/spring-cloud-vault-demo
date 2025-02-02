@@ -3,7 +3,6 @@ package com.example.springcloudvaultdemo.service;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,30 +15,32 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RabbitMQService {
 
-    @Value("${spring.rabbitmq.host}")
+    @Value("${rabbitmq.host}")
     private String rabbitmqHost;
 
-    @Value("${spring.rabbitmq.port}")
+    @Value("${rabbitmq.port}")
     private Integer rabbitmqPort;
 
-    @Value("${spring.rabbitmq.username}")
+    @Value("${rabbitmq.username}")
     private String rabbitmqUsername;
 
-    @Value("${spring.rabbitmq.password}")
+    @Value("${rabbitmq.password}")
     private String rabbitmqPassword;
 
-    @Value("${spring.rabbitmq.virtual-host}")
+    @Value("${rabbitmq.virtual-host}")
     private String rabbitmqVirtualHost;
 
-    private final RabbitTemplate rabbitTemplate;
+    @Value("${consul.host}")
+    private String consulHost;
+
+    @Value("${consul.port}")
+    private String consulPort;
 
     @PostConstruct
     public void init() {
         log.info("RabbitMQ Host: {}", rabbitmqHost);
         log.info("RabbitMQ Port: {}", rabbitmqPort);
-
-        rabbitTemplate.convertAndSend("x.test", "test.rk", "Hello world");
-
-        log.info("Sent data");
+        log.info("Consul host: {}", consulHost);
+        log.info("Consul port: {}", consulPort);
     }
 }

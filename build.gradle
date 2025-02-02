@@ -28,6 +28,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
     implementation 'org.springframework.cloud:spring-cloud-vault-config-rabbitmq'
+    implementation "org.springframework.cloud:spring-cloud-starter-consul-discovery"
+
     runtimeOnly 'org.postgresql:postgresql'
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
